@@ -3,10 +3,11 @@ package com.project.reportcentral.model;
 public class ReportCentralModel {
     private String reportId;
     private String reportName;
-    private int version;
+    private String version;
 
+    public ReportCentralModel(){};
 
-    public ReportCentralModel(String reportId, String reportName, int version) {
+    public ReportCentralModel(String reportId, String reportName, String version) {
         this.reportId = reportId;
         this.reportName = reportName;
         this.version = version;
@@ -20,7 +21,7 @@ public class ReportCentralModel {
         return reportName;
     }
 
-    public int getVersion() {
+    public String getVersion() {
         return version;
     }
 }
