@@ -18,4 +18,15 @@ public class ReportRepository {
         return jdbcTemplate.query(query, new ReportRowMapper());
     }
 
+    public List<ReportCentralModel> findById(String reportId)
+    {
+        String query = "select * from reportInfo where reportId = " + "'" + reportId + "'" ;
+        return jdbcTemplate.query(query, new ReportRowMapper());
+    }
+
+    public void addReportInfo(ReportCentralModel reportCentralModel)
+    {
+        String query = "INSERT into reportInfo VALUES(?,?,?,?,?)";
+        jdbcTemplate.update(query,reportCentralModel.getReportId(),reportCentralModel.getReportName(),reportCentralModel.getReportType(),reportCentralModel.getReportFormat(),reportCentralModel.getCreationTime());
+    }
 }
