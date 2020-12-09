@@ -39,9 +39,10 @@ public class ReportCentralController {
         return ls;
     }
 
-    @PostMapping("/addInfo")
+    @PostMapping("/createReport")
     public void addReportInfo(@RequestBody ReportCentralModel reportCentralModel)
     {
         reportRepository.addReportInfo(reportCentralModel);
+        //TODO : ReponseEntity
     }
 }

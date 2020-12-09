@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ReportRowMapper implements RowMapper<ReportCentralModel> {
     @Override
-    public ReportCentralModel mapRow(ResultSet resultSet, int i) throws SQLException {
+    public ReportCentralModel mapRow(ResultSet resultSet, int rownum) throws SQLException {
         ReportCentralModel rcm= new ReportCentralModel(resultSet.getString("reportId"),resultSet.getString("reportName"),resultSet.getString("reportType"),resultSet.getString("reportFormat"),resultSet.getTimestamp("creationDate"));
         return rcm;
     }
