@@ -1,4 +1,4 @@
-insert into reportInfo values('IN150M','Interest Schedule Report','INTEREST','PDF',CURRENT_TIMESTAMP());
+insert into reportInfo values('IN150MM','Interest Schedule Report','INTEREST','PDF',CURRENT_TIMESTAMP());
 insert into reportInfo values('RTM902B','Custom Margin Report','MARGIN','PDF',CURRENT_TIMESTAMP());
 insert into reportInfo values('IN150MMX','Interest Schedule Report','INTEREST','CSV',CURRENT_TIMESTAMP());
 insert into reportInfo values('TB0011X','Trade Breaks Report','BREAKS','PDF',CURRENT_TIMESTAMP());

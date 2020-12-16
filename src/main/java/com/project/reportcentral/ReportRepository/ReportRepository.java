@@ -2,6 +2,7 @@ package com.project.reportcentral.ReportRepository;
 
 import com.project.reportcentral.model.ReportCentralModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -9,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +32,18 @@ public class ReportRepository {
         return jdbcTemplate.query(query, new ReportRowMapper());
     }
 
-    public List<ReportCentralModel> findById(String reportId)
+    public ReportCentralModel findById(String reportId)
     {
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         SqlParameterSource namedparameters = new MapSqlParameterSource().addValue("reportId",reportId);
         String query = "select * from reportInfo where reportId = :reportId ";
-        return namedParameterJdbcTemplate.query(query,namedparameters,new ReportRowMapper());
+        List<ReportCentralModel> result;
+        result= namedParameterJdbcTemplate.query(query,namedparameters,new ReportRowMapper());
+        ReportCentralModel rcm = DataAccessUtils.singleResult(result);
+        return rcm;
     }
 
-    public void addReportInfo(ReportCentralModel reportCentralModel)
+    public int addReportInfo(ReportCentralModel reportCentralModel)
     {
         Map rMap = new HashMap();
         rMap.put("reportId",reportCentralModel.getReportId());
@@ -48,7 +53,7 @@ public class ReportRepository {
         rMap.put("creationDate",reportCentralModel.getCreationTime());
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         String query = "INSERT into reportInfo VALUES(:reportId,:reportName,:reportType,:reportFormat,:creationDate)";
-        namedParameterJdbcTemplate.update(query,rMap);
+        return namedParameterJdbcTemplate.update(query,rMap);
         //jdbcTemplate.update(query,reportCentralModel.getReportId(),reportCentralModel.getReportName(),reportCentralModel.getReportType(),reportCentralModel.getReportFormat(),reportCentralModel.getCreationTime());
     }
 }
