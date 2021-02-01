@@ -15,4 +15,10 @@ public class ReportExceptionHandler extends ResponseEntityExceptionHandler {
         String error = rex.getLocalizedMessage();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(ReportNotCreatedException.class)
+    public ResponseEntity<?> handleReportNotCreatedException(ReportNotCreatedException rex)
+    {
+        String error = rex.getLocalizedMessage();
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
 }

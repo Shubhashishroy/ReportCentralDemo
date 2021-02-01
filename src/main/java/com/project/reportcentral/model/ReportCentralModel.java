@@ -8,12 +8,11 @@ public class ReportCentralModel {
     private String reportType;
     private String reportFormat;
     private Timestamp creationTime;
+    private String reportUuid;
 
     public ReportCentralModel(){};
 
-    public String getReportId() {
-        return reportId;
-    }
+    public String getReportId() { return reportId; }
 
     public String getReportName() {
         return reportName;
@@ -31,12 +30,16 @@ public class ReportCentralModel {
         return creationTime;
     }
 
-    public ReportCentralModel(String reportId, String reportName, String reportType, String reportFormat, Timestamp creationTime) {
+    public String getReportUuid() {
+        return reportUuid;
+    }
+
+    public ReportCentralModel(String reportId, String reportName, String reportType, String reportFormat, Timestamp creationTime, String reportUuid) {
         this.reportId = reportId;
         this.reportName = reportName;
         this.reportType = reportType;
         this.reportFormat = reportFormat;
         this.creationTime = creationTime;
-
+        this.reportUuid = reportUuid;
     }
 }

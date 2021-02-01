@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ReportRowMapper implements RowMapper<ReportCentralModel> {
     @Override
     public ReportCentralModel mapRow(ResultSet resultSet, int rownum) throws SQLException {
-        ReportCentralModel rcm= new ReportCentralModel(resultSet.getString("reportId"),resultSet.getString("reportName"),resultSet.getString("reportType"),resultSet.getString("reportFormat"),resultSet.getTimestamp("creationDate"));
+        ReportCentralModel rcm= new ReportCentralModel(resultSet.getString("reportId"),resultSet.getString("reportName"),resultSet.getString("reportType"),resultSet.getString("reportFormat"),resultSet.getTimestamp("creationDate"),resultSet.getString("reportUuid"));
         return rcm;
     }
 }

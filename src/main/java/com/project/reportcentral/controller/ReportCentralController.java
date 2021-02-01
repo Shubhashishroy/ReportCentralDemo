@@ -1,7 +1,9 @@
 package com.project.reportcentral.controller;
 
+import com.project.reportcentral.ReportException.ReportNotCreatedException;
 import com.project.reportcentral.ReportException.ReportNotFoundException;
 import com.project.reportcentral.ReportRepository.ReportRepository;
+import com.project.reportcentral.Service.ReportCentralService;
 import com.project.reportcentral.model.ReportCentralModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +20,16 @@ public class ReportCentralController {
     @Autowired
     private ReportRepository reportRepository;
 
+    @Autowired
+    private ReportCentralService reportCentralService;
+
     @GetMapping("/reportInfo")
     public ReportCentralModel getReportInfo(@RequestParam(value = "reportId") String reportId)
     {
-        ReportCentralModel mod = new ReportCentralModel(reportId,"Interest","WIRE","PDF", Timestamp.from(Instant.now())); //new Timestamp(new Date().getTime()));
+        ReportCentralModel mod =  new ReportCentralModel(reportId,"Interest","WIRE","PDF", Timestamp.from(Instant.now()),"DEFAULT UUID"); //new Timestamp(new Date().getTime()));
         return mod;
     }
-
+    /* This method returns all the reports and their information stored in database */
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllReportInfo()
     {
@@ -58,17 +63,26 @@ public class ReportCentralController {
         if(rcm != null)
             return rcm;
         else
-            System.out.print("Report does not exist");
+           // System.out.print("Report does not exist");
             throw new ReportNotFoundException(String.format("Report %s does not exist",reportId));
     }
 
+//    @PostMapping("/createReport")
+//    public ResponseEntity<?> addReportInfo(@RequestBody ReportCentralModel reportCentralModel)
+//    {
+//        int c = reportRepository.addReportInfo(reportCentralModel);
+//        if(c >= 1)
+//            return new ResponseEntity<>("New report was created successfully.",HttpStatus.CREATED);
+//        else
+//            throw new ReportNotCreatedException(String.format("Report %s already exists",reportCentralModel.getReportId()));
+//    }
+
     @PostMapping("/createReport")
-    public ResponseEntity<?> addReportInfo(@RequestBody ReportCentralModel reportCentralModel)
-    {
-        int c = reportRepository.addReportInfo(reportCentralModel);
-        if(c >= 1)
-            return new ResponseEntity<>("New report was created successfully.",HttpStatus.CREATED);
+    public ResponseEntity<?> addReportInfoUuid(@RequestBody ReportCentralModel reportCentralModel) {
+        int c = reportCentralService.addReportInfo(reportCentralModel);
+        if (c >= 1)
+            return new ResponseEntity<>("New report was created successfully.", HttpStatus.CREATED);
         else
-            return new ResponseEntity<>("Creation of Report was not successful",HttpStatus.BAD_REQUEST);
+            throw new ReportNotCreatedException(String.format("Report %s already exists", reportCentralModel.getReportId()));
     }
 }
